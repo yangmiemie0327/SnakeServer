@@ -13,8 +13,9 @@ type PlayerData struct {
 
 var PlayerList map[string]PlayerData
 
-func Init() {
+func init() {
 
+	PlayerList = make(map[string]PlayerData)
 }
 
 func LoginPlayer(account_id string, a gate.Agent) {

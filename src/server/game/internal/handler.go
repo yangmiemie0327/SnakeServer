@@ -25,7 +25,6 @@ func handleLogin(args []interface{}) {
 	a := args[1].(gate.Agent)
 
 	// 输出收到的消息的内容
-	log.Debug("Login %v %v", m.AccountId, m.ThemeType)
 	gamelogic.LoginPlayer(m.AccountId, a)
 	// 给发送者回应一个 Login 消息
 	a.WriteMsg(&msg.Login{
@@ -43,18 +42,19 @@ func handleMove(args []interface{}) {
 	// 消息的发送者
 	//a := args[1].(gate.Agent)
 
-	// // 输出收到的消息的内容
+	// 输出收到的消息的内容
 	log.Debug("Move %v %v %v", m.AccountId, m.PosX, m.PosY)
 
-	// 给发送者回应一个 Move 消息
-	// a.WriteMsg(&msg.Move{
-	// 	AccountId: "abc",
-	// 	PosX:      0.3,
-	// 	PosY:      0.4,
-	// })
 	gamelogic.Broadcast(&msg.Move{
 		AccountId: "abc",
 		PosX:      0.3,
 		PosY:      0.4,
 	})
+
+	//给发送者回应一个 Move 消息
+	// a.WriteMsg(&msg.Move{
+	// 	AccountId: "abc",
+	// 	PosX:      0.3,
+	// 	PosY:      0.4,
+	// })
 }
