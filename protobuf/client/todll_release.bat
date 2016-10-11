@@ -1,0 +1,2 @@
+C:\WINDOWS\Microsoft.NET\Framework\v2.0.50727\csc.exe /noconfig "/out:DLL\MessageDefine.dll" "/r:C:\WINDOWS\Microsoft.NET\Framework\v2.0.50727\System.dll" "/r:C:\WINDOWS\Microsoft.NET\Framework\v2.0.50727\System.XML.dll" "/r:protobuf-net.dll" "/r:C:\Program Files\Reference Assemblies\Microsoft\Framework\v3.5\System.Core.dll" /nologo /warn:4 /optimize- /t:library  "cs_source\MessageDefine.cs"  /fullpaths /utf8output  
+call last.bat
