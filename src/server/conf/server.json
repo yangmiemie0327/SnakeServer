@@ -1,0 +1,9 @@
+{
+    "LogLevel":"junbin",
+    "LogPath":"a",
+    "WSAddr":"127.0.0.1:3653",
+    "TCPAddr":"127.0.0.1:3563",
+    "MaxConnNum":20000,
+    "ConsolePort":2016,
+    "ProfilePath":"conf/"
+}
