@@ -4,6 +4,7 @@ import (
 	"github.com/name5566/leaf/gate"
 	"github.com/name5566/leaf/log"
 	"reflect"
+	"server/game/gamelogic"
 	"server/msg"
 )
 
@@ -25,7 +26,7 @@ func handleLogin(args []interface{}) {
 
 	// 输出收到的消息的内容
 	log.Debug("Login %v %v", m.AccountId, m.ThemeType)
-
+	gamelogic.LoginPlayer(m.AccountId, a)
 	// 给发送者回应一个 Login 消息
 	a.WriteMsg(&msg.Login{
 		RoomId: 1,
@@ -40,13 +41,18 @@ func handleMove(args []interface{}) {
 	//收到消息
 	m := args[0].(*msg.Move)
 	// 消息的发送者
-	a := args[1].(gate.Agent)
+	//a := args[1].(gate.Agent)
 
 	// // 输出收到的消息的内容
 	log.Debug("Move %v %v %v", m.AccountId, m.PosX, m.PosY)
 
 	// 给发送者回应一个 Move 消息
-	a.WriteMsg(&msg.Move{
+	// a.WriteMsg(&msg.Move{
+	// 	AccountId: "abc",
+	// 	PosX:      0.3,
+	// 	PosY:      0.4,
+	// })
+	gamelogic.Broadcast(&msg.Move{
 		AccountId: "abc",
 		PosX:      0.3,
 		PosY:      0.4,
