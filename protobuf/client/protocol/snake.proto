@@ -1,16 +1,25 @@
 message Login {
-//账号
-required string AccountId = 1;
-//皮肤
-required int32 ThemeType = 2;
-//账号
-required int32 RoomId = 3;
-//房间宽
-required float RoomW = 4;
-//房间高
-required float RoomH = 5;
-//玩家出生位置X
-required float StartX = 6;
-//玩家出生位置Y
-required float StartY = 7;
+	//账号
+	optional string AccountId = 1;
+	//皮肤
+	optional int32 ThemeType = 2;
+	//账号
+	optional int32 RoomId = 3;
+	//房间宽
+	optional float RoomW = 4;
+	//房间高
+	optional float RoomH = 5;
+	//玩家出生位置X
+	optional float StartX = 6;
+	//玩家出生位置Y
+	optional float StartY = 7;
+}
+
+message Move{
+	//账号
+	optional string AccountId = 1;
+	//移动点x
+	optional float PosX = 2;
+	//移动点y
+	optional float PosY = 3;
 }

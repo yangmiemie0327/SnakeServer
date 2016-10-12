@@ -18,54 +18,185 @@ namespace Snake3D
     public Login() {}
     
     private string _AccountId;
-    [global::ProtoBuf.ProtoMember(1, IsRequired = true, Name=@"AccountId", DataFormat = global::ProtoBuf.DataFormat.Default)]
+    [global::ProtoBuf.ProtoMember(1, IsRequired = false, Name=@"AccountId", DataFormat = global::ProtoBuf.DataFormat.Default)]
     public string AccountId
     {
-      get { return _AccountId; }
+      get { return _AccountId?? ""; }
       set { _AccountId = value; }
     }
-    private int _ThemeType;
-    [global::ProtoBuf.ProtoMember(2, IsRequired = true, Name=@"ThemeType", DataFormat = global::ProtoBuf.DataFormat.TwosComplement)]
+    [global::System.Xml.Serialization.XmlIgnore]
+    [global::System.ComponentModel.Browsable(false)]
+    public bool AccountIdSpecified
+    {
+      get { return this._AccountId != null; }
+      set { if (value == (this._AccountId== null)) this._AccountId = value ? this.AccountId : (string)null; }
+    }
+    private bool ShouldSerializeAccountId() { return AccountIdSpecified; }
+    private void ResetAccountId() { AccountIdSpecified = false; }
+    
+    private int? _ThemeType;
+    [global::ProtoBuf.ProtoMember(2, IsRequired = false, Name=@"ThemeType", DataFormat = global::ProtoBuf.DataFormat.TwosComplement)]
     public int ThemeType
     {
-      get { return _ThemeType; }
+      get { return _ThemeType?? default(int); }
       set { _ThemeType = value; }
     }
-    private int _RoomId;
-    [global::ProtoBuf.ProtoMember(3, IsRequired = true, Name=@"RoomId", DataFormat = global::ProtoBuf.DataFormat.TwosComplement)]
+    [global::System.Xml.Serialization.XmlIgnore]
+    [global::System.ComponentModel.Browsable(false)]
+    public bool ThemeTypeSpecified
+    {
+      get { return this._ThemeType != null; }
+      set { if (value == (this._ThemeType== null)) this._ThemeType = value ? this.ThemeType : (int?)null; }
+    }
+    private bool ShouldSerializeThemeType() { return ThemeTypeSpecified; }
+    private void ResetThemeType() { ThemeTypeSpecified = false; }
+    
+    private int? _RoomId;
+    [global::ProtoBuf.ProtoMember(3, IsRequired = false, Name=@"RoomId", DataFormat = global::ProtoBuf.DataFormat.TwosComplement)]
     public int RoomId
     {
-      get { return _RoomId; }
+      get { return _RoomId?? default(int); }
       set { _RoomId = value; }
     }
-    private float _RoomW;
-    [global::ProtoBuf.ProtoMember(4, IsRequired = true, Name=@"RoomW", DataFormat = global::ProtoBuf.DataFormat.FixedSize)]
+    [global::System.Xml.Serialization.XmlIgnore]
+    [global::System.ComponentModel.Browsable(false)]
+    public bool RoomIdSpecified
+    {
+      get { return this._RoomId != null; }
+      set { if (value == (this._RoomId== null)) this._RoomId = value ? this.RoomId : (int?)null; }
+    }
+    private bool ShouldSerializeRoomId() { return RoomIdSpecified; }
+    private void ResetRoomId() { RoomIdSpecified = false; }
+    
+    private float? _RoomW;
+    [global::ProtoBuf.ProtoMember(4, IsRequired = false, Name=@"RoomW", DataFormat = global::ProtoBuf.DataFormat.FixedSize)]
     public float RoomW
     {
-      get { return _RoomW; }
+      get { return _RoomW?? default(float); }
       set { _RoomW = value; }
     }
-    private float _RoomH;
-    [global::ProtoBuf.ProtoMember(5, IsRequired = true, Name=@"RoomH", DataFormat = global::ProtoBuf.DataFormat.FixedSize)]
+    [global::System.Xml.Serialization.XmlIgnore]
+    [global::System.ComponentModel.Browsable(false)]
+    public bool RoomWSpecified
+    {
+      get { return this._RoomW != null; }
+      set { if (value == (this._RoomW== null)) this._RoomW = value ? this.RoomW : (float?)null; }
+    }
+    private bool ShouldSerializeRoomW() { return RoomWSpecified; }
+    private void ResetRoomW() { RoomWSpecified = false; }
+    
+    private float? _RoomH;
+    [global::ProtoBuf.ProtoMember(5, IsRequired = false, Name=@"RoomH", DataFormat = global::ProtoBuf.DataFormat.FixedSize)]
     public float RoomH
     {
-      get { return _RoomH; }
+      get { return _RoomH?? default(float); }
       set { _RoomH = value; }
     }
-    private float _StartX;
-    [global::ProtoBuf.ProtoMember(6, IsRequired = true, Name=@"StartX", DataFormat = global::ProtoBuf.DataFormat.FixedSize)]
+    [global::System.Xml.Serialization.XmlIgnore]
+    [global::System.ComponentModel.Browsable(false)]
+    public bool RoomHSpecified
+    {
+      get { return this._RoomH != null; }
+      set { if (value == (this._RoomH== null)) this._RoomH = value ? this.RoomH : (float?)null; }
+    }
+    private bool ShouldSerializeRoomH() { return RoomHSpecified; }
+    private void ResetRoomH() { RoomHSpecified = false; }
+    
+    private float? _StartX;
+    [global::ProtoBuf.ProtoMember(6, IsRequired = false, Name=@"StartX", DataFormat = global::ProtoBuf.DataFormat.FixedSize)]
     public float StartX
     {
-      get { return _StartX; }
+      get { return _StartX?? default(float); }
       set { _StartX = value; }
     }
-    private float _StartY;
-    [global::ProtoBuf.ProtoMember(7, IsRequired = true, Name=@"StartY", DataFormat = global::ProtoBuf.DataFormat.FixedSize)]
+    [global::System.Xml.Serialization.XmlIgnore]
+    [global::System.ComponentModel.Browsable(false)]
+    public bool StartXSpecified
+    {
+      get { return this._StartX != null; }
+      set { if (value == (this._StartX== null)) this._StartX = value ? this.StartX : (float?)null; }
+    }
+    private bool ShouldSerializeStartX() { return StartXSpecified; }
+    private void ResetStartX() { StartXSpecified = false; }
+    
+    private float? _StartY;
+    [global::ProtoBuf.ProtoMember(7, IsRequired = false, Name=@"StartY", DataFormat = global::ProtoBuf.DataFormat.FixedSize)]
     public float StartY
     {
-      get { return _StartY; }
+      get { return _StartY?? default(float); }
       set { _StartY = value; }
     }
+    [global::System.Xml.Serialization.XmlIgnore]
+    [global::System.ComponentModel.Browsable(false)]
+    public bool StartYSpecified
+    {
+      get { return this._StartY != null; }
+      set { if (value == (this._StartY== null)) this._StartY = value ? this.StartY : (float?)null; }
+    }
+    private bool ShouldSerializeStartY() { return StartYSpecified; }
+    private void ResetStartY() { StartYSpecified = false; }
+    
+    private global::ProtoBuf.IExtension extensionObject;
+    global::ProtoBuf.IExtension global::ProtoBuf.IExtensible.GetExtensionObject(bool createIfMissing)
+      { return global::ProtoBuf.Extensible.GetExtensionObject(ref extensionObject, createIfMissing); }
+  }
+  
+  [global::System.Serializable, global::ProtoBuf.ProtoContract(Name=@"Move")]
+  public partial class Move : global::ProtoBuf.IExtensible
+  {
+    public Move() {}
+    
+    private string _AccountId;
+    [global::ProtoBuf.ProtoMember(1, IsRequired = false, Name=@"AccountId", DataFormat = global::ProtoBuf.DataFormat.Default)]
+    public string AccountId
+    {
+      get { return _AccountId?? ""; }
+      set { _AccountId = value; }
+    }
+    [global::System.Xml.Serialization.XmlIgnore]
+    [global::System.ComponentModel.Browsable(false)]
+    public bool AccountIdSpecified
+    {
+      get { return this._AccountId != null; }
+      set { if (value == (this._AccountId== null)) this._AccountId = value ? this.AccountId : (string)null; }
+    }
+    private bool ShouldSerializeAccountId() { return AccountIdSpecified; }
+    private void ResetAccountId() { AccountIdSpecified = false; }
+    
+    private float? _PosX;
+    [global::ProtoBuf.ProtoMember(2, IsRequired = false, Name=@"PosX", DataFormat = global::ProtoBuf.DataFormat.FixedSize)]
+    public float PosX
+    {
+      get { return _PosX?? default(float); }
+      set { _PosX = value; }
+    }
+    [global::System.Xml.Serialization.XmlIgnore]
+    [global::System.ComponentModel.Browsable(false)]
+    public bool PosXSpecified
+    {
+      get { return this._PosX != null; }
+      set { if (value == (this._PosX== null)) this._PosX = value ? this.PosX : (float?)null; }
+    }
+    private bool ShouldSerializePosX() { return PosXSpecified; }
+    private void ResetPosX() { PosXSpecified = false; }
+    
+    private float? _PosY;
+    [global::ProtoBuf.ProtoMember(3, IsRequired = false, Name=@"PosY", DataFormat = global::ProtoBuf.DataFormat.FixedSize)]
+    public float PosY
+    {
+      get { return _PosY?? default(float); }
+      set { _PosY = value; }
+    }
+    [global::System.Xml.Serialization.XmlIgnore]
+    [global::System.ComponentModel.Browsable(false)]
+    public bool PosYSpecified
+    {
+      get { return this._PosY != null; }
+      set { if (value == (this._PosY== null)) this._PosY = value ? this.PosY : (float?)null; }
+    }
+    private bool ShouldSerializePosY() { return PosYSpecified; }
+    private void ResetPosY() { PosYSpecified = false; }
+    
     private global::ProtoBuf.IExtension extensionObject;
     global::ProtoBuf.IExtension global::ProtoBuf.IExtensible.GetExtensionObject(bool createIfMissing)
       { return global::ProtoBuf.Extensible.GetExtensionObject(ref extensionObject, createIfMissing); }
