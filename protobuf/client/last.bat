@@ -1,6 +1,6 @@
 set DEF_OUT=E:\Git\snake3D\snake\Assets\Plugins
 cd precompile
-precompile ..\DLL\MessageDefine.dll -o:ProtobufSerializer.dll -t:Snake.ProtobufSerializer
+precompile ..\DLL\MessageDefine.dll -o:ProtobufSerializer.dll -t:Snake3D.ProtobufSerializer
 
 copy ..\DLL\MessageDefine.dll %DEF_OUT%\MessageDefine.dll
 

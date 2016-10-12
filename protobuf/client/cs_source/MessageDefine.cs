@@ -9,62 +9,73 @@
 
 // Option: missing-value detection (*Specified/ShouldSerialize*/Reset*) enabled
     
-// Generated from: protocol/test.proto
-namespace Snake
+// Generated from: protocol/snake.proto
+namespace Snake3D
 {
-  [global::System.Serializable, global::ProtoBuf.ProtoContract(Name=@"MyRequest")]
-  public partial class MyRequest : global::ProtoBuf.IExtensible
+  [global::System.Serializable, global::ProtoBuf.ProtoContract(Name=@"LoginReq")]
+  public partial class LoginReq : global::ProtoBuf.IExtensible
   {
-    public MyRequest() {}
+    public LoginReq() {}
     
-    private int _version;
-    [global::ProtoBuf.ProtoMember(1, IsRequired = true, Name=@"version", DataFormat = global::ProtoBuf.DataFormat.TwosComplement)]
-    public int version
+    private string _AccountId;
+    [global::ProtoBuf.ProtoMember(1, IsRequired = true, Name=@"AccountId", DataFormat = global::ProtoBuf.DataFormat.Default)]
+    public string AccountId
     {
-      get { return _version; }
-      set { _version = value; }
+      get { return _AccountId; }
+      set { _AccountId = value; }
     }
-    private string _name;
-    [global::ProtoBuf.ProtoMember(2, IsRequired = true, Name=@"name", DataFormat = global::ProtoBuf.DataFormat.Default)]
-    public string name
+    private int _ThemeType;
+    [global::ProtoBuf.ProtoMember(2, IsRequired = true, Name=@"ThemeType", DataFormat = global::ProtoBuf.DataFormat.TwosComplement)]
+    public int ThemeType
     {
-      get { return _name; }
-      set { _name = value; }
+      get { return _ThemeType; }
+      set { _ThemeType = value; }
     }
-    private string _website;
-    [global::ProtoBuf.ProtoMember(3, IsRequired = false, Name=@"website", DataFormat = global::ProtoBuf.DataFormat.Default)]
-    public string website
-    {
-      get { return _website?? @"http://www.paotiao.com/"; }
-      set { _website = value; }
-    }
-    [global::System.Xml.Serialization.XmlIgnore]
-    [global::System.ComponentModel.Browsable(false)]
-    public bool websiteSpecified
-    {
-      get { return this._website != null; }
-      set { if (value == (this._website== null)) this._website = value ? this.website : (string)null; }
-    }
-    private bool ShouldSerializewebsite() { return websiteSpecified; }
-    private void Resetwebsite() { websiteSpecified = false; }
+    private global::ProtoBuf.IExtension extensionObject;
+    global::ProtoBuf.IExtension global::ProtoBuf.IExtensible.GetExtensionObject(bool createIfMissing)
+      { return global::ProtoBuf.Extensible.GetExtensionObject(ref extensionObject, createIfMissing); }
+  }
+  
+  [global::System.Serializable, global::ProtoBuf.ProtoContract(Name=@"LoginRes")]
+  public partial class LoginRes : global::ProtoBuf.IExtensible
+  {
+    public LoginRes() {}
     
-    private byte[] _data;
-    [global::ProtoBuf.ProtoMember(4, IsRequired = false, Name=@"data", DataFormat = global::ProtoBuf.DataFormat.Default)]
-    public byte[] data
+    private int _RoomId;
+    [global::ProtoBuf.ProtoMember(1, IsRequired = true, Name=@"RoomId", DataFormat = global::ProtoBuf.DataFormat.TwosComplement)]
+    public int RoomId
     {
-      get { return _data?? null; }
-      set { _data = value; }
+      get { return _RoomId; }
+      set { _RoomId = value; }
     }
-    [global::System.Xml.Serialization.XmlIgnore]
-    [global::System.ComponentModel.Browsable(false)]
-    public bool dataSpecified
+    private float _RoomW;
+    [global::ProtoBuf.ProtoMember(2, IsRequired = true, Name=@"RoomW", DataFormat = global::ProtoBuf.DataFormat.FixedSize)]
+    public float RoomW
     {
-      get { return this._data != null; }
-      set { if (value == (this._data== null)) this._data = value ? this.data : (byte[])null; }
+      get { return _RoomW; }
+      set { _RoomW = value; }
     }
-    private bool ShouldSerializedata() { return dataSpecified; }
-    private void Resetdata() { dataSpecified = false; }
-    
+    private float _RoomH;
+    [global::ProtoBuf.ProtoMember(3, IsRequired = true, Name=@"RoomH", DataFormat = global::ProtoBuf.DataFormat.FixedSize)]
+    public float RoomH
+    {
+      get { return _RoomH; }
+      set { _RoomH = value; }
+    }
+    private float _StartX;
+    [global::ProtoBuf.ProtoMember(4, IsRequired = true, Name=@"StartX", DataFormat = global::ProtoBuf.DataFormat.FixedSize)]
+    public float StartX
+    {
+      get { return _StartX; }
+      set { _StartX = value; }
+    }
+    private float _StartY;
+    [global::ProtoBuf.ProtoMember(5, IsRequired = true, Name=@"StartY", DataFormat = global::ProtoBuf.DataFormat.FixedSize)]
+    public float StartY
+    {
+      get { return _StartY; }
+      set { _StartY = value; }
+    }
     private global::ProtoBuf.IExtension extensionObject;
     global::ProtoBuf.IExtension global::ProtoBuf.IExtensible.GetExtensionObject(bool createIfMissing)
       { return global::ProtoBuf.Extensible.GetExtensionObject(ref extensionObject, createIfMissing); }
