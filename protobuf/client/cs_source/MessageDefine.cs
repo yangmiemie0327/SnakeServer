@@ -12,10 +12,10 @@
 // Generated from: protocol/snake.proto
 namespace Snake3D
 {
-  [global::System.Serializable, global::ProtoBuf.ProtoContract(Name=@"LoginReq")]
-  public partial class LoginReq : global::ProtoBuf.IExtensible
+  [global::System.Serializable, global::ProtoBuf.ProtoContract(Name=@"Login")]
+  public partial class Login : global::ProtoBuf.IExtensible
   {
-    public LoginReq() {}
+    public Login() {}
     
     private string _AccountId;
     [global::ProtoBuf.ProtoMember(1, IsRequired = true, Name=@"AccountId", DataFormat = global::ProtoBuf.DataFormat.Default)]
@@ -31,46 +31,36 @@ namespace Snake3D
       get { return _ThemeType; }
       set { _ThemeType = value; }
     }
-    private global::ProtoBuf.IExtension extensionObject;
-    global::ProtoBuf.IExtension global::ProtoBuf.IExtensible.GetExtensionObject(bool createIfMissing)
-      { return global::ProtoBuf.Extensible.GetExtensionObject(ref extensionObject, createIfMissing); }
-  }
-  
-  [global::System.Serializable, global::ProtoBuf.ProtoContract(Name=@"LoginRes")]
-  public partial class LoginRes : global::ProtoBuf.IExtensible
-  {
-    public LoginRes() {}
-    
     private int _RoomId;
-    [global::ProtoBuf.ProtoMember(1, IsRequired = true, Name=@"RoomId", DataFormat = global::ProtoBuf.DataFormat.TwosComplement)]
+    [global::ProtoBuf.ProtoMember(3, IsRequired = true, Name=@"RoomId", DataFormat = global::ProtoBuf.DataFormat.TwosComplement)]
     public int RoomId
     {
       get { return _RoomId; }
       set { _RoomId = value; }
     }
     private float _RoomW;
-    [global::ProtoBuf.ProtoMember(2, IsRequired = true, Name=@"RoomW", DataFormat = global::ProtoBuf.DataFormat.FixedSize)]
+    [global::ProtoBuf.ProtoMember(4, IsRequired = true, Name=@"RoomW", DataFormat = global::ProtoBuf.DataFormat.FixedSize)]
     public float RoomW
     {
       get { return _RoomW; }
       set { _RoomW = value; }
     }
     private float _RoomH;
-    [global::ProtoBuf.ProtoMember(3, IsRequired = true, Name=@"RoomH", DataFormat = global::ProtoBuf.DataFormat.FixedSize)]
+    [global::ProtoBuf.ProtoMember(5, IsRequired = true, Name=@"RoomH", DataFormat = global::ProtoBuf.DataFormat.FixedSize)]
     public float RoomH
     {
       get { return _RoomH; }
       set { _RoomH = value; }
     }
     private float _StartX;
-    [global::ProtoBuf.ProtoMember(4, IsRequired = true, Name=@"StartX", DataFormat = global::ProtoBuf.DataFormat.FixedSize)]
+    [global::ProtoBuf.ProtoMember(6, IsRequired = true, Name=@"StartX", DataFormat = global::ProtoBuf.DataFormat.FixedSize)]
     public float StartX
     {
       get { return _StartX; }
       set { _StartX = value; }
     }
     private float _StartY;
-    [global::ProtoBuf.ProtoMember(5, IsRequired = true, Name=@"StartY", DataFormat = global::ProtoBuf.DataFormat.FixedSize)]
+    [global::ProtoBuf.ProtoMember(7, IsRequired = true, Name=@"StartY", DataFormat = global::ProtoBuf.DataFormat.FixedSize)]
     public float StartY
     {
       get { return _StartY; }

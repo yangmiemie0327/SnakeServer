@@ -1,4 +1,4 @@
-set DEF_OUT=E:\Git\snake3D\snake\Assets\Plugins
+set DEF_OUT=E:\code\unity\snake\Assets\Plugins
 cd precompile
 precompile ..\DLL\MessageDefine.dll -o:ProtobufSerializer.dll -t:Snake3D.ProtobufSerializer
 
