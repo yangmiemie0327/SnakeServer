@@ -9,8 +9,16 @@ It is generated from these files:
 	snake.proto
 
 It has these top-level messages:
+	MsgMsgData
+	MsgMsgInit
+	MsgPosInfo
+	MsgPlayerInfo
 	Login
-	Move
+	MsgMove
+	MsgRoomInfo
+	MsgExitRoom
+	MsgError
+	MsgHeartbeat
 */
 package snake
 
@@ -29,131 +37,316 @@ var _ = math.Inf
 // proto package needs to be updated.
 const _ = proto.ProtoPackageIsVersion2 // please upgrade the proto package
 
-type Login struct {
-	// 账号
-	AccountId *string `protobuf:"bytes,1,opt,name=AccountId" json:"AccountId,omitempty"`
-	// 皮肤
-	ThemeType *int32 `protobuf:"varint,2,opt,name=ThemeType" json:"ThemeType,omitempty"`
-	// 账号
-	RoomId *int32 `protobuf:"varint,3,opt,name=RoomId" json:"RoomId,omitempty"`
-	// 房间宽
-	RoomW *float32 `protobuf:"fixed32,4,opt,name=RoomW" json:"RoomW,omitempty"`
-	// 房间高
-	RoomH *float32 `protobuf:"fixed32,5,opt,name=RoomH" json:"RoomH,omitempty"`
-	// 玩家出生位置X
-	StartX *float32 `protobuf:"fixed32,6,opt,name=StartX" json:"StartX,omitempty"`
-	// 玩家出生位置Y
-	StartY           *float32 `protobuf:"fixed32,7,opt,name=StartY" json:"StartY,omitempty"`
-	XXX_unrecognized []byte   `json:"-"`
+// 错误提示码
+type TErrorType int32
+
+const (
+	TErrorType_ErrorInvalid TErrorType = 0
+)
+
+var TErrorType_name = map[int32]string{
+	0: "ErrorInvalid",
+}
+var TErrorType_value = map[string]int32{
+	"ErrorInvalid": 0,
 }
 
-func (m *Login) Reset()                    { *m = Login{} }
-func (m *Login) String() string            { return proto.CompactTextString(m) }
-func (*Login) ProtoMessage()               {}
-func (*Login) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{0} }
+func (x TErrorType) Enum() *TErrorType {
+	p := new(TErrorType)
+	*p = x
+	return p
+}
+func (x TErrorType) String() string {
+	return proto.EnumName(TErrorType_name, int32(x))
+}
+func (x *TErrorType) UnmarshalJSON(data []byte) error {
+	value, err := proto.UnmarshalJSONEnum(TErrorType_value, data, "TErrorType")
+	if err != nil {
+		return err
+	}
+	*x = TErrorType(value)
+	return nil
+}
+func (TErrorType) EnumDescriptor() ([]byte, []int) { return fileDescriptor0, []int{0} }
 
-func (m *Login) GetAccountId() string {
-	if m != nil && m.AccountId != nil {
-		return *m.AccountId
+type MsgMsgData struct {
+	// id
+	MsgId *uint32 `protobuf:"varint,1,opt,name=MsgId" json:"MsgId,omitempty"`
+	// 消息名字
+	MsgName          *string `protobuf:"bytes,2,opt,name=MsgName" json:"MsgName,omitempty"`
+	XXX_unrecognized []byte  `json:"-"`
+}
+
+func (m *MsgMsgData) Reset()                    { *m = MsgMsgData{} }
+func (m *MsgMsgData) String() string            { return proto.CompactTextString(m) }
+func (*MsgMsgData) ProtoMessage()               {}
+func (*MsgMsgData) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{0} }
+
+func (m *MsgMsgData) GetMsgId() uint32 {
+	if m != nil && m.MsgId != nil {
+		return *m.MsgId
+	}
+	return 0
+}
+
+func (m *MsgMsgData) GetMsgName() string {
+	if m != nil && m.MsgName != nil {
+		return *m.MsgName
 	}
 	return ""
 }
 
-func (m *Login) GetThemeType() int32 {
-	if m != nil && m.ThemeType != nil {
-		return *m.ThemeType
-	}
-	return 0
+// 初始化消息id,服务器注册列表0为该消息
+type MsgMsgInit struct {
+	MsgList          []*MsgMsgData `protobuf:"bytes,1,rep,name=MsgList" json:"MsgList,omitempty"`
+	XXX_unrecognized []byte        `json:"-"`
 }
 
-func (m *Login) GetRoomId() int32 {
-	if m != nil && m.RoomId != nil {
-		return *m.RoomId
+func (m *MsgMsgInit) Reset()                    { *m = MsgMsgInit{} }
+func (m *MsgMsgInit) String() string            { return proto.CompactTextString(m) }
+func (*MsgMsgInit) ProtoMessage()               {}
+func (*MsgMsgInit) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{1} }
+
+func (m *MsgMsgInit) GetMsgList() []*MsgMsgData {
+	if m != nil {
+		return m.MsgList
 	}
-	return 0
+	return nil
 }
 
-func (m *Login) GetRoomW() float32 {
-	if m != nil && m.RoomW != nil {
-		return *m.RoomW
-	}
-	return 0
-}
-
-func (m *Login) GetRoomH() float32 {
-	if m != nil && m.RoomH != nil {
-		return *m.RoomH
-	}
-	return 0
-}
-
-func (m *Login) GetStartX() float32 {
-	if m != nil && m.StartX != nil {
-		return *m.StartX
-	}
-	return 0
-}
-
-func (m *Login) GetStartY() float32 {
-	if m != nil && m.StartY != nil {
-		return *m.StartY
-	}
-	return 0
-}
-
-type Move struct {
-	// 账号
-	AccountId *string `protobuf:"bytes,1,opt,name=AccountId" json:"AccountId,omitempty"`
-	// 移动点x
-	PosX *float32 `protobuf:"fixed32,2,opt,name=PosX" json:"PosX,omitempty"`
-	// 移动点y
-	PosY             *float32 `protobuf:"fixed32,3,opt,name=PosY" json:"PosY,omitempty"`
+// 点信息
+type MsgPosInfo struct {
+	// x
+	PosX *float32 `protobuf:"fixed32,1,opt,name=PosX" json:"PosX,omitempty"`
+	// y
+	PosY             *float32 `protobuf:"fixed32,2,opt,name=PosY" json:"PosY,omitempty"`
 	XXX_unrecognized []byte   `json:"-"`
 }
 
-func (m *Move) Reset()                    { *m = Move{} }
-func (m *Move) String() string            { return proto.CompactTextString(m) }
-func (*Move) ProtoMessage()               {}
-func (*Move) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{1} }
+func (m *MsgPosInfo) Reset()                    { *m = MsgPosInfo{} }
+func (m *MsgPosInfo) String() string            { return proto.CompactTextString(m) }
+func (*MsgPosInfo) ProtoMessage()               {}
+func (*MsgPosInfo) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{2} }
 
-func (m *Move) GetAccountId() string {
-	if m != nil && m.AccountId != nil {
-		return *m.AccountId
-	}
-	return ""
-}
-
-func (m *Move) GetPosX() float32 {
+func (m *MsgPosInfo) GetPosX() float32 {
 	if m != nil && m.PosX != nil {
 		return *m.PosX
 	}
 	return 0
 }
 
-func (m *Move) GetPosY() float32 {
+func (m *MsgPosInfo) GetPosY() float32 {
 	if m != nil && m.PosY != nil {
 		return *m.PosY
 	}
 	return 0
 }
 
+// 玩家信息
+type MsgPlayerInfo struct {
+	// 账号
+	AccountId *string `protobuf:"bytes,1,opt,name=AccountId" json:"AccountId,omitempty"`
+	// 房间id
+	RoomId *uint32 `protobuf:"varint,2,opt,name=RoomId" json:"RoomId,omitempty"`
+	// 坐标列表(从头到尾)
+	PosList          []*MsgPosInfo `protobuf:"bytes,3,rep,name=PosList" json:"PosList,omitempty"`
+	XXX_unrecognized []byte        `json:"-"`
+}
+
+func (m *MsgPlayerInfo) Reset()                    { *m = MsgPlayerInfo{} }
+func (m *MsgPlayerInfo) String() string            { return proto.CompactTextString(m) }
+func (*MsgPlayerInfo) ProtoMessage()               {}
+func (*MsgPlayerInfo) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{3} }
+
+func (m *MsgPlayerInfo) GetAccountId() string {
+	if m != nil && m.AccountId != nil {
+		return *m.AccountId
+	}
+	return ""
+}
+
+func (m *MsgPlayerInfo) GetRoomId() uint32 {
+	if m != nil && m.RoomId != nil {
+		return *m.RoomId
+	}
+	return 0
+}
+
+func (m *MsgPlayerInfo) GetPosList() []*MsgPosInfo {
+	if m != nil {
+		return m.PosList
+	}
+	return nil
+}
+
+// 登录,C发送账号到S,S回复不带参数
+type Login struct {
+	Account          *string `protobuf:"bytes,1,opt,name=account" json:"account,omitempty"`
+	XXX_unrecognized []byte  `json:"-"`
+}
+
+func (m *Login) Reset()                    { *m = Login{} }
+func (m *Login) String() string            { return proto.CompactTextString(m) }
+func (*Login) ProtoMessage()               {}
+func (*Login) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{4} }
+
+func (m *Login) GetAccount() string {
+	if m != nil && m.Account != nil {
+		return *m.Account
+	}
+	return ""
+}
+
+// 移动,C发摇杆的值,S根据该值计算玩家要去的点回复给C
+type MsgMove struct {
+	// 账号
+	AccountId *string `protobuf:"bytes,1,opt,name=AccountId" json:"AccountId,omitempty"`
+	// 目标点
+	TargetPos        *MsgPosInfo `protobuf:"bytes,2,opt,name=TargetPos" json:"TargetPos,omitempty"`
+	XXX_unrecognized []byte      `json:"-"`
+}
+
+func (m *MsgMove) Reset()                    { *m = MsgMove{} }
+func (m *MsgMove) String() string            { return proto.CompactTextString(m) }
+func (*MsgMove) ProtoMessage()               {}
+func (*MsgMove) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{5} }
+
+func (m *MsgMove) GetAccountId() string {
+	if m != nil && m.AccountId != nil {
+		return *m.AccountId
+	}
+	return ""
+}
+
+func (m *MsgMove) GetTargetPos() *MsgPosInfo {
+	if m != nil {
+		return m.TargetPos
+	}
+	return nil
+}
+
+// 房间,C发送选择的房间id到S,S回复房间信息给C
+type MsgRoomInfo struct {
+	// 房间id
+	RoomId *uint32 `protobuf:"varint,1,opt,name=RoomId" json:"RoomId,omitempty"`
+	// 宽(对应x)
+	RoomW *float32 `protobuf:"fixed32,2,opt,name=RoomW" json:"RoomW,omitempty"`
+	// 高(对应y)
+	RoomH *float32 `protobuf:"fixed32,3,opt,name=RoomH" json:"RoomH,omitempty"`
+	// 现有玩家列表
+	PlayerList       []*MsgPlayerInfo `protobuf:"bytes,4,rep,name=PlayerList" json:"PlayerList,omitempty"`
+	XXX_unrecognized []byte           `json:"-"`
+}
+
+func (m *MsgRoomInfo) Reset()                    { *m = MsgRoomInfo{} }
+func (m *MsgRoomInfo) String() string            { return proto.CompactTextString(m) }
+func (*MsgRoomInfo) ProtoMessage()               {}
+func (*MsgRoomInfo) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{6} }
+
+func (m *MsgRoomInfo) GetRoomId() uint32 {
+	if m != nil && m.RoomId != nil {
+		return *m.RoomId
+	}
+	return 0
+}
+
+func (m *MsgRoomInfo) GetRoomW() float32 {
+	if m != nil && m.RoomW != nil {
+		return *m.RoomW
+	}
+	return 0
+}
+
+func (m *MsgRoomInfo) GetRoomH() float32 {
+	if m != nil && m.RoomH != nil {
+		return *m.RoomH
+	}
+	return 0
+}
+
+func (m *MsgRoomInfo) GetPlayerList() []*MsgPlayerInfo {
+	if m != nil {
+		return m.PlayerList
+	}
+	return nil
+}
+
+// 退出房间，C无需参数，S无需参数
+type MsgExitRoom struct {
+	XXX_unrecognized []byte `json:"-"`
+}
+
+func (m *MsgExitRoom) Reset()                    { *m = MsgExitRoom{} }
+func (m *MsgExitRoom) String() string            { return proto.CompactTextString(m) }
+func (*MsgExitRoom) ProtoMessage()               {}
+func (*MsgExitRoom) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{7} }
+
+// 错误码
+type MsgError struct {
+	// 错误码
+	ErrorIdx         *uint32 `protobuf:"varint,1,opt,name=ErrorIdx" json:"ErrorIdx,omitempty"`
+	XXX_unrecognized []byte  `json:"-"`
+}
+
+func (m *MsgError) Reset()                    { *m = MsgError{} }
+func (m *MsgError) String() string            { return proto.CompactTextString(m) }
+func (*MsgError) ProtoMessage()               {}
+func (*MsgError) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{8} }
+
+func (m *MsgError) GetErrorIdx() uint32 {
+	if m != nil && m.ErrorIdx != nil {
+		return *m.ErrorIdx
+	}
+	return 0
+}
+
+// 心跳包
+type MsgHeartbeat struct {
+	XXX_unrecognized []byte `json:"-"`
+}
+
+func (m *MsgHeartbeat) Reset()                    { *m = MsgHeartbeat{} }
+func (m *MsgHeartbeat) String() string            { return proto.CompactTextString(m) }
+func (*MsgHeartbeat) ProtoMessage()               {}
+func (*MsgHeartbeat) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{9} }
+
 func init() {
+	proto.RegisterType((*MsgMsgData)(nil), "MsgMsgData")
+	proto.RegisterType((*MsgMsgInit)(nil), "MsgMsgInit")
+	proto.RegisterType((*MsgPosInfo)(nil), "MsgPosInfo")
+	proto.RegisterType((*MsgPlayerInfo)(nil), "MsgPlayerInfo")
 	proto.RegisterType((*Login)(nil), "Login")
-	proto.RegisterType((*Move)(nil), "Move")
+	proto.RegisterType((*MsgMove)(nil), "MsgMove")
+	proto.RegisterType((*MsgRoomInfo)(nil), "MsgRoomInfo")
+	proto.RegisterType((*MsgExitRoom)(nil), "MsgExitRoom")
+	proto.RegisterType((*MsgError)(nil), "MsgError")
+	proto.RegisterType((*MsgHeartbeat)(nil), "MsgHeartbeat")
+	proto.RegisterEnum("TErrorType", TErrorType_name, TErrorType_value)
 }
 
 func init() { proto.RegisterFile("snake.proto", fileDescriptor0) }
 
 var fileDescriptor0 = []byte{
-	// 158 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x09, 0x6e, 0x88, 0x02, 0xff, 0xe2, 0xe2, 0x2e, 0xce, 0x4b, 0xcc,
-	0x4e, 0xd5, 0x2b, 0x28, 0xca, 0x2f, 0xc9, 0x57, 0xaa, 0xe6, 0x62, 0xf5, 0xc9, 0x4f, 0xcf, 0xcc,
-	0x13, 0x12, 0xe4, 0xe2, 0x74, 0x4c, 0x4e, 0xce, 0x2f, 0xcd, 0x2b, 0xf1, 0x4c, 0x91, 0x60, 0x54,
-	0x60, 0xd4, 0xe0, 0x04, 0x09, 0x85, 0x64, 0xa4, 0xe6, 0xa6, 0x86, 0x54, 0x16, 0xa4, 0x4a, 0x30,
-	0x29, 0x30, 0x6a, 0xb0, 0x0a, 0xf1, 0x71, 0xb1, 0x05, 0xe5, 0xe7, 0xe7, 0x7a, 0xa6, 0x48, 0x30,
-	0x83, 0xf9, 0xbc, 0x5c, 0xac, 0x20, 0x7e, 0xb8, 0x04, 0x8b, 0x02, 0xa3, 0x06, 0x13, 0x8c, 0xeb,
-	0x21, 0xc1, 0x0a, 0xe6, 0xf2, 0x71, 0xb1, 0x05, 0x97, 0x24, 0x16, 0x95, 0x44, 0x48, 0xb0, 0xa1,
-	0xf0, 0x23, 0x25, 0xd8, 0x41, 0x7c, 0x25, 0x53, 0x2e, 0x16, 0xdf, 0xfc, 0xb2, 0x54, 0x6c, 0x76,
-	0xf3, 0x70, 0xb1, 0x04, 0xe4, 0x17, 0x47, 0x80, 0xad, 0x65, 0x82, 0xf2, 0x22, 0xc1, 0x96, 0x32,
-	0x01, 0x02, 0x00, 0x00, 0xff, 0xff, 0xc7, 0xe2, 0xaf, 0xdd, 0xc1, 0x00, 0x00, 0x00,
+	// 322 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x09, 0x6e, 0x88, 0x02, 0xff, 0x6c, 0x90, 0xcf, 0x4b, 0xfb, 0x40,
+	0x14, 0xc4, 0xbf, 0xe9, 0x8f, 0xaf, 0xcd, 0x4b, 0x53, 0xeb, 0x9e, 0x72, 0x28, 0xa5, 0xec, 0x29,
+	0x14, 0xe9, 0xc1, 0xb3, 0x17, 0x41, 0xa1, 0x81, 0xae, 0x04, 0x29, 0xa8, 0x27, 0x59, 0x9b, 0x75,
+	0x09, 0xb6, 0x79, 0x65, 0x77, 0x2d, 0xed, 0x7f, 0x2f, 0xfb, 0xb6, 0xa5, 0x28, 0xde, 0x32, 0x64,
+	0xde, 0x7c, 0x66, 0x16, 0x12, 0xdb, 0xc8, 0x4f, 0x35, 0xdb, 0x1a, 0x74, 0xc8, 0xaf, 0x01, 0x84,
+	0xd5, 0xc2, 0xea, 0x7b, 0xe9, 0x24, 0x4b, 0xa1, 0x2b, 0xac, 0x2e, 0xaa, 0x2c, 0x9a, 0x44, 0x79,
+	0xca, 0x2e, 0xe1, 0x42, 0x58, 0xfd, 0x28, 0x37, 0x2a, 0x6b, 0x4d, 0xa2, 0x3c, 0xe6, 0xd3, 0x93,
+	0xbb, 0x68, 0x6a, 0xc7, 0x46, 0xf4, 0x7b, 0x51, 0x5b, 0x97, 0x45, 0x93, 0x76, 0x9e, 0xdc, 0x24,
+	0xb3, 0x73, 0x16, 0xcf, 0xc9, 0x5b, 0xa2, 0x2d, 0x9a, 0x0f, 0x64, 0x7d, 0xe8, 0x94, 0x68, 0x5f,
+	0x28, 0xb8, 0x75, 0x54, 0xaf, 0x94, 0xda, 0xe2, 0x25, 0xa4, 0xde, 0xb9, 0x96, 0x07, 0x65, 0xc8,
+	0x7c, 0x05, 0xf1, 0xdd, 0x6a, 0x85, 0x5f, 0x8d, 0x3b, 0x56, 0x89, 0xd9, 0x00, 0xfe, 0x3f, 0x21,
+	0x6e, 0x8a, 0x8a, 0x6e, 0x52, 0xcf, 0x2e, 0xd1, 0x12, 0xbb, 0x7d, 0x66, 0x1f, 0x69, 0x3c, 0x83,
+	0xee, 0x02, 0x75, 0xdd, 0xf8, 0x05, 0x32, 0x24, 0x85, 0x1c, 0x7e, 0x4b, 0x9d, 0x05, 0xee, 0xd4,
+	0x5f, 0x94, 0x31, 0xc4, 0x4b, 0x69, 0xb4, 0x72, 0x25, 0x5a, 0x02, 0xfd, 0xca, 0x7d, 0x83, 0x44,
+	0x58, 0x4d, 0x45, 0x7c, 0xcf, 0x73, 0xa9, 0xf0, 0x5e, 0x29, 0x74, 0xbd, 0x7e, 0x0e, 0xbb, 0x4e,
+	0x72, 0x9e, 0xb5, 0x49, 0x72, 0x80, 0xb0, 0x91, 0x5a, 0x77, 0xa8, 0xf5, 0x60, 0xf6, 0x63, 0x39,
+	0x4f, 0x09, 0xf0, 0xb0, 0xaf, 0x9d, 0xbf, 0xe4, 0x23, 0xe8, 0x79, 0x69, 0x0c, 0x1a, 0x36, 0x84,
+	0x1e, 0x7d, 0x14, 0xd5, 0x3e, 0xe0, 0xf8, 0x00, 0xfa, 0xc2, 0xea, 0xb9, 0x92, 0xc6, 0xbd, 0x2b,
+	0xe9, 0xa6, 0x63, 0x80, 0x25, 0x59, 0x96, 0x87, 0xad, 0x62, 0x43, 0xe8, 0x07, 0x7f, 0xb3, 0x93,
+	0xeb, 0xba, 0x1a, 0xfe, 0xfb, 0x0e, 0x00, 0x00, 0xff, 0xff, 0x58, 0x63, 0xb1, 0x1f, 0xf9, 0x01,
+	0x00, 0x00,
 }
