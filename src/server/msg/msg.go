@@ -10,6 +10,10 @@ var Processor = protobuf.NewProcessor()
 
 func init() {
 	// 这里我们注册了一个 JSON 消息 Login
-	Processor.Register(&snake.Login{})
-	Processor.Register(&snake.Move{})
+	Processor.Register(&snake.MsgMsgInit{})
+	Processor.Register(&snake.MsgLogin{})
+	Processor.Register(&snake.MsgMove{})
+	Processor.Register(&snake.MsgRoomInfo{})
+	Processor.Register(&snake.MsgExitRoom{})
+	Processor.Register(&snake.MsgError{})
 }

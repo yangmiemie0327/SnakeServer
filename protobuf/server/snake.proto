@@ -1,25 +1,63 @@
-message Login {
-	//账号
-	optional string AccountId = 1;
-	//皮肤
-	optional int32 ThemeType = 2;
-	//账号
-	optional int32 RoomId = 3;
-	//房间宽
-	optional float RoomW = 4;
-	//房间高
-	optional float RoomH = 5;
-	//玩家出生位置X
-	optional float StartX = 6;
-	//玩家出生位置Y
-	optional float StartY = 7;
+//错误提示码
+enum TErrorType{
+	ErrorInvalid = 0;  // 无效
 }
-
-message Move{
+message MsgMsgData{
+	//id
+	optional uint32 MsgId = 1;
+	//消息名字
+	optional string MsgName = 2;
+}
+//初始化消息id,服务器注册列表0为该消息
+message MsgMsgInit{
+	repeated MsgMsgData MsgList = 1;
+}
+//点信息
+message MsgPosInfo{
+	//x
+	optional float PosX = 1;
+	//y
+	optional float PosY = 2;
+}
+//玩家信息
+message MsgPlayerInfo{
 	//账号
 	optional string AccountId = 1;
-	//移动点x
-	optional float PosX = 2;
-	//移动点y
-	optional float PosY = 3;
+	//房间id
+	optional uint32 RoomId = 2;
+	//坐标列表(从头到尾)
+	repeated MsgPosInfo PosList = 3;
+}
+//登录,C发送账号到S,S回复不带参数
+message MsgLogin{
+	optional string AccountId = 1;
+}
+//移动,C发摇杆的值,S根据该值计算玩家要去的点回复给C
+message MsgMove{
+	//账号
+	optional string AccountId = 1;
+	//目标点
+	optional MsgPosInfo TargetPos = 2;
+}
+//房间,C发送选择的房间id到S,S回复房间信息给C
+message MsgRoomInfo{
+	//房间id
+	optional uint32 RoomId = 1;
+	//宽(对应x)
+	optional float RoomW = 2;
+	//高(对应y)
+	optional float RoomH = 3;
+	//现有玩家列表
+	repeated MsgPlayerInfo PlayerList = 4;
+}
+//退出房间，C无需参数，S无需参数
+message MsgExitRoom{
+}
+//错误码
+message MsgError{
+	//错误码
+	optional uint32 ErrorIdx = 1;
+}
+//心跳包
+message MsgHeartbeat{
 }

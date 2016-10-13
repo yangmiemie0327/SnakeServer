@@ -14,7 +14,6 @@ type PlayerData struct {
 var PlayerList map[string]PlayerData
 
 func init() {
-
 	PlayerList = make(map[string]PlayerData)
 }
 
