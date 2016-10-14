@@ -14,6 +14,7 @@ func init() {
 	msg.Processor.SetRouter(&snake.MsgLogin{}, game.ChanRPC)
 	msg.Processor.SetRouter(&snake.MsgMove{}, game.ChanRPC)
 	msg.Processor.SetRouter(&snake.MsgRoomInfo{}, game.ChanRPC)
+	msg.Processor.SetRouter(&snake.MsgRoomEnter{}, game.ChanRPC)
 	msg.Processor.SetRouter(&snake.MsgExitRoom{}, game.ChanRPC)
 	msg.Processor.SetRouter(&snake.MsgError{}, game.ChanRPC)
 }

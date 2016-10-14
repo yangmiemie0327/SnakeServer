@@ -14,6 +14,7 @@ func init() {
 	Processor.Register(&snake.MsgLogin{})
 	Processor.Register(&snake.MsgMove{})
 	Processor.Register(&snake.MsgRoomInfo{})
+	Processor.Register(&snake.MsgRoomEnter{})
 	Processor.Register(&snake.MsgExitRoom{})
 	Processor.Register(&snake.MsgError{})
 }

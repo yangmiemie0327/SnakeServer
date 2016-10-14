@@ -1,6 +1,17 @@
 //错误提示码
 enum TErrorType{
-	ErrorInvalid = 0;  // 无效
+	// 无效
+	Invalid = 0;
+	//房间号为空
+	RoomIdIsNull = 1;
+	//该玩家不在房间中
+	PlayerNoInRoom = 2;
+	//该玩家已经在房间中
+	PlayerInRoom = 3;
+	//该玩家不存在
+	PlayerIsNo = 4;
+	//其他设备登录
+	OtherLogin = 5;
 }
 message MsgMsgData{
 	//id
@@ -39,19 +50,43 @@ message MsgMove{
 	//目标点
 	optional MsgPosInfo TargetPos = 2;
 }
-//房间,C发送选择的房间id到S,S回复房间信息给C
-message MsgRoomInfo{
+//房间数据
+message MsgRoomData{
 	//房间id
 	optional uint32 RoomId = 1;
 	//宽(对应x)
 	optional float RoomW = 2;
 	//高(对应y)
 	optional float RoomH = 3;
+	//玩家数量
+	optional uint32 PlayerCount = 4;
 	//现有玩家列表
-	repeated MsgPlayerInfo PlayerList = 4;
+	repeated string AccountIdList = 5;
+}
+//房间,C发送查看房间信息到S,S回复房间信息给C
+message MsgRoomInfo{
+	//房间列表
+	repeated MsgRoomData RoomList = 4;
+}
+//进入房间
+message MsgRoomEnter{
+	//房间id
+	optional uint32 RoomId = 1;
+	//账号
+	optional string AccountId = 2;
+	//宽(对应x)
+	optional float RoomW = 3;
+	//高(对应y)
+	optional float RoomH = 4;
+	//玩家数量
+	optional uint32 PlayerCount = 5;
+	//现有玩家列表
+	repeated MsgPlayerInfo PlayerList = 6;
 }
 //退出房间，C无需参数，S无需参数
 message MsgExitRoom{
+	//账号
+	optional string AccountId = 1;
 }
 //错误码
 message MsgError{
