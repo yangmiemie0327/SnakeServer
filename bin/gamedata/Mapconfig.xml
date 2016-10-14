@@ -1,0 +1,5 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<map>
+  <map id ="1" width="500" length="500" path="map/Map1" camHeight="30" camOffet="-10" maxPlayer="50"/>
+  <map id ="2" width="500" length="300" path="map/Map1" camHeight="30" camOffet="-10" maxPlayer="30"/>
+</map>

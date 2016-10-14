@@ -1,0 +1,5 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<!--蛇的一个节点数据配置表-->
+<nodes>
+  <node id="" radius="" width="" height="" path="" score=""/>
+</nodes>
