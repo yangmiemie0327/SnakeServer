@@ -22,6 +22,7 @@ func init() {
 	initRoom(0, 500, 500)
 	initRoom(1, 500, 500)
 }
+
 func initRoom(rId uint32, rW float32, rH float32) {
 	RoomList[rId] = RoomData{
 		RoomId:     rId,
@@ -30,7 +31,9 @@ func initRoom(rId uint32, rW float32, rH float32) {
 		PlayerList: make(map[string]int),
 	}
 }
+
 func Update() {
+	fmt.Print("*")
 	for _, val := range RoomList {
 		for playerId, _ := range val.PlayerList {
 			if date, ok := gamelogic.PlayerList[playerId]; ok {
@@ -60,7 +63,15 @@ func AddPlayer(rId uint32, pId string) snake.TErrorType {
 	RoomList[rId].PlayerList[pId] = len(RoomList[rId].PlayerList) + 1
 	return snake.TErrorType_Invalid
 }
-func RemovePlayer(pId string) bool {
-	fmt.Print(pId)
-	return true
+func RemovePlayer(pId string) (bool, uint32) {
+	for rId, val := range RoomList {
+		for playerId, _ := range val.PlayerList {
+			if playerId == pId {
+				delete(val.PlayerList, playerId)
+				return true, rId
+			}
+		}
+
+	}
+	return false, 0
 }

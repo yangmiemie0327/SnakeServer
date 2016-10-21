@@ -42,6 +42,14 @@ func Broadcast(m interface{}) {
 	}
 }
 
+func BroadcastRoom(m interface{}, rId uint32) {
+	for _, value := range PlayerList {
+		if value.RoomId == rId {
+			value.Connect.WriteMsg(m)
+		}
+	}
+}
+
 func (p *PlayerData) Update() {
 	fmt.Print(p, "\n")
 }

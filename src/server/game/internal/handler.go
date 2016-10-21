@@ -49,7 +49,7 @@ func handleMsgInit(args []interface{}) {
 func handleLogin(args []interface{}) {
 	m := args[0].(*snake.MsgLogin)
 	a := args[1].(gate.Agent)
-
+	fmt.Print("\n^^^^^^^^^^^^^^^\n")
 	gamelogic.LoginPlayer(m.GetAccountId(), a)
 	a.WriteMsg(&snake.MsgLogin{})
 }
@@ -129,8 +129,8 @@ func handleRoomEnter(args []interface{}) {
 func handleExitRoom(args []interface{}) {
 	m := args[0].(*snake.MsgExitRoom)
 	a := args[1].(gate.Agent)
-	if roomlogic.RemovePlayer(m.GetAccountId()) {
-		a.WriteMsg(&snake.MsgExitRoom{})
+	if ok, rId := roomlogic.RemovePlayer(m.GetAccountId()); ok {
+		gamelogic.BroadcastRoom(&snake.MsgExitRoom{}, rId)
 	} else {
 		a.WriteMsg(&snake.MsgError{
 			ErrorIdx: proto.Uint32(uint32(snake.TErrorType_PlayerNoInRoom)),
