@@ -33,7 +33,6 @@ func initRoom(rId uint32, rW float32, rH float32) {
 }
 
 func Update() {
-	fmt.Print("*")
 	for _, val := range RoomList {
 		for playerId, _ := range val.PlayerList {
 			if date, ok := gamelogic.PlayerList[playerId]; ok {

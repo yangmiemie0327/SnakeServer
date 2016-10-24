@@ -1,6 +1,6 @@
 {
-    "LogLevel":"junbin",
-    "LogPath":"a",
+    "LogLevel":"",
+    "LogPath":"",
     "WSAddr":"127.0.0.1:3653",
     "TCPAddr":"127.0.0.1:3563",
     "MaxConnNum":20000,

@@ -25,3 +25,7 @@ func (m *Module) OnInit() {
 		AgentChanRPC:    game.ChanRPC,
 	}
 }
+
+func (m *Module) OnDestroy() {
+
+}
