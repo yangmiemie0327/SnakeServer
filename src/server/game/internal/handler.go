@@ -63,6 +63,11 @@ func handleMove(args []interface{}) {
 		})
 		return
 	}
+	x := m.GetTargetPos().GetPosX()
+	y := m.GetTargetPos().GetPosY()
+	if x*x+y*y > 2 {
+		return
+	}
 	pData.DirectionX = m.GetTargetPos().GetPosX()
 	pData.DirectionY = m.GetTargetPos().GetPosY()
 }
