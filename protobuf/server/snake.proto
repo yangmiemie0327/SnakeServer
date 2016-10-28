@@ -13,6 +13,12 @@ enum TErrorType{
 	//其他设备登录
 	OtherLogin = 5;
 }
+enum TPosShapeType{
+	//方形
+	Square = 0;
+	//圆形
+	Round = 1;
+}
 message MsgMsgData{
 	//id
 	optional uint32 MsgId = 1;
@@ -36,8 +42,16 @@ message MsgPlayerInfo{
 	optional string AccountId = 1;
 	//房间id
 	optional uint32 RoomId = 2;
+	//朝向x
+	optional float DirectionX = 3;
+	//朝向y
+	optional float DirectionY = 4;
+	//速度
+	optional float Speed = 5;
+	//长度
+	optional uint32 SurplusLength = 6;
 	//坐标列表(从头到尾)
-	repeated MsgPosInfo PosList = 3;
+	repeated MsgPosInfo PosList = 7;
 }
 //登录,C发送账号到S,S回复不带参数
 message MsgLogin{
@@ -49,6 +63,42 @@ message MsgMove{
 	optional string AccountId = 1;
 	//目标点
 	optional MsgPosInfo TargetPos = 2;
+}
+//单点结构
+message MsgPosStruct{
+	//账号
+	optional string AccountId = 1;
+	//x
+	optional float PosX = 2;
+	//y
+	optional float PosY = 3;
+}
+//服务器心跳同步到客户端
+message MsgAddTargetPos{
+	//玩家新增点位
+	repeated MsgPosStruct PosList = 1;
+}
+//食物结构
+message MsgFoodStruct{
+	//id
+	optional uint32 Id = 1;
+	//x
+	optional float PosX = 2;
+	//y
+	optional float PosY = 3;
+	//半径
+	optional float Radius = 4;
+	//分数
+	optional uint32 Score = 5;
+}
+//添加食物
+message MsgAddFood{
+	//食物
+	repeated MsgFoodStruct FoodList = 1;
+}
+//删除食物
+message MsgDelFood{
+	repeated uint32 FoodList = 1;
 }
 //房间数据
 message MsgRoomData{

@@ -1,10 +1,9 @@
 package internal
 
 import (
-	"fmt"
 	"github.com/name5566/leaf/module"
 	"server/base"
-	"server/game/roomlogic"
+	"server/game/gamelogic"
 	"time"
 )
 
@@ -25,7 +24,7 @@ func (m *Module) OnInit() {
 }
 
 func (m *Module) OnDestroy() {
-	IsUpdate = false
+	//IsUpdate = false
 }
 
 func timeupdate() {
@@ -34,7 +33,7 @@ func timeupdate() {
 	go func() {
 		<-timer.C
 		if IsUpdate {
-			roomlogic.Update()
+			gamelogic.UpdateRoom()
 			timeupdate()
 		}
 	}()

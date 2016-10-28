@@ -7,9 +7,9 @@ import (
 	"fmt"
 	"reflect"
 	"server/game/gamelogic"
-	"server/game/roomlogic"
 	"server/msg"
 	"server/msg/snake"
+	"strings"
 )
 
 var MsgListDate []*snake.MsgMsgData
@@ -25,9 +25,10 @@ func init() {
 	handler(&snake.MsgError{}, handleError)
 
 	msg.Processor.Range(func(id uint16, t reflect.Type) {
+		tempS := strings.Split(t.Elem().String(), ".")
 		i := snake.MsgMsgData{
 			MsgId:   proto.Uint32(uint32(id)),
-			MsgName: proto.String(t.Elem().String()),
+			MsgName: proto.String(tempS[len(tempS)-1]),
 		}
 		MsgListDate = append(MsgListDate, &i)
 	})
@@ -38,7 +39,6 @@ func handler(m interface{}, h interface{}) {
 }
 
 func handleMsgInit(args []interface{}) {
-	fmt.Print("msginit\n")
 	a := args[1].(gate.Agent)
 
 	a.WriteMsg(&snake.MsgMsgInit{
@@ -49,27 +49,34 @@ func handleMsgInit(args []interface{}) {
 func handleLogin(args []interface{}) {
 	m := args[0].(*snake.MsgLogin)
 	a := args[1].(gate.Agent)
-	fmt.Print("\n^^^^^^^^^^^^^^^\n")
 	gamelogic.LoginPlayer(m.GetAccountId(), a)
 	a.WriteMsg(&snake.MsgLogin{})
 }
 
 func handleMove(args []interface{}) {
-	//m := args[0].(*snake.MsgMove)
-
-	gamelogic.Broadcast(&snake.MsgMove{})
+	m := args[0].(*snake.MsgMove)
+	a := args[1].(gate.Agent)
+	pData, ok := gamelogic.PlayerList[m.GetAccountId()]
+	if !ok {
+		a.WriteMsg(&snake.MsgError{
+			ErrorIdx: proto.Uint32(uint32(snake.TErrorType_PlayerIsNo)),
+		})
+		return
+	}
+	pData.DirectionX = m.GetTargetPos().GetPosX()
+	pData.DirectionY = m.GetTargetPos().GetPosY()
 }
 
 func handleRoomInfo(args []interface{}) {
 	a := args[1].(gate.Agent)
 	var data []*snake.MsgRoomData
 
-	for _, v := range roomlogic.RoomList {
+	for _, v := range gamelogic.RoomList {
 		i := snake.MsgRoomData{
 			RoomId:      proto.Uint32(v.RoomId),
 			RoomW:       proto.Float32(v.RoomW),
 			RoomH:       proto.Float32(v.RoomH),
-			PlayerCount: proto.Uint32(uint32(len(roomlogic.RoomList))),
+			PlayerCount: proto.Uint32(uint32(len(gamelogic.RoomList))),
 		}
 		for k, _ := range v.PlayerList {
 			i.AccountIdList = append(i.AccountIdList, k)
@@ -85,21 +92,26 @@ func handleRoomInfo(args []interface{}) {
 func handleRoomEnter(args []interface{}) {
 	m := args[0].(*snake.MsgRoomEnter)
 	a := args[1].(gate.Agent)
-	err := roomlogic.AddPlayer(m.GetRoomId(), m.GetAccountId())
+	err := gamelogic.AddPlayer(m.GetRoomId(), m.GetAccountId())
 	if err != snake.TErrorType_Invalid {
+		fmt.Print(err, "\n")
 		a.WriteMsg(&snake.MsgError{
 			ErrorIdx: proto.Uint32(uint32(err)),
 		})
 		return
 	}
-	if rData, ok := roomlogic.RoomList[m.GetRoomId()]; ok {
+	if rData, ok := gamelogic.RoomList[m.GetRoomId()]; ok {
 		var data []*snake.MsgPlayerInfo
 
 		for k, _ := range rData.PlayerList {
 			if pData, ok := gamelogic.PlayerList[k]; ok {
 				msgPdata := snake.MsgPlayerInfo{
-					AccountId: proto.String(pData.AccountId),
-					RoomId:    proto.Uint32(pData.RoomId),
+					AccountId:     proto.String(pData.AccountId),
+					RoomId:        proto.Uint32(pData.RoomId),
+					DirectionX:    proto.Float32(pData.DirectionX),
+					DirectionY:    proto.Float32(pData.DirectionY),
+					Speed:         proto.Float32(pData.Speed),
+					SurplusLength: proto.Uint32(pData.SurplusLength),
 				}
 				for i := 0; i < len(pData.PosList); i++ {
 					msgPdata.PosList = append(msgPdata.PosList,
@@ -129,7 +141,7 @@ func handleRoomEnter(args []interface{}) {
 func handleExitRoom(args []interface{}) {
 	m := args[0].(*snake.MsgExitRoom)
 	a := args[1].(gate.Agent)
-	if ok, rId := roomlogic.RemovePlayer(m.GetAccountId()); ok {
+	if ok, rId := gamelogic.RemovePlayer(m.GetAccountId()); ok {
 		gamelogic.BroadcastRoom(&snake.MsgExitRoom{}, rId)
 	} else {
 		a.WriteMsg(&snake.MsgError{
@@ -139,4 +151,8 @@ func handleExitRoom(args []interface{}) {
 }
 
 func handleError(args []interface{}) {
+}
+
+func handleAddTargetPos(args []interface{}) {
+
 }
